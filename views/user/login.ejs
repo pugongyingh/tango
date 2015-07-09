@@ -1,0 +1,15 @@
+<h1>登入</h1>
+<form action="/login" method="post">
+  
+  <div><strong><%- FlashErr.show(flash, 'login') %><strong></div>
+  
+  <label for="email">帳號</label>
+  <input name="email" type="text"/>
+  <br/>
+
+  <label for="password">密碼</label>
+  <input name="password" type="password"/>
+  <br/>
+  <a href="/forget_password">忘記密碼</a>
+  <input type="submit"/>
+</form>

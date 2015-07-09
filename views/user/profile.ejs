@@ -1,0 +1,57 @@
+<h1>修改資料</h1>
+<%= (flash && flash.success) ? '更新成功' : (flash && flash.err) ? '更新失敗' : '' %>
+
+<h2>基本資料</h2>
+<form enctype="multipart/form-data" action="/profile" method="post" class="form" autocomplete="off">
+
+  <h2>更改頭像</h2>
+  <img src="<%= Avatar.url(session.me) %>?thumb=50x50">
+  <input type="file" name="avatar">
+  
+  <hr>
+  
+  
+  <label for="lastname">姓</label>
+  <input name="lastname" type="text" value="<%= session.me.lastname %>">
+  <%- FlashErr.show(flash, 'lastname') %>
+  <br>
+  
+  <label for="firstname">名</label>
+  <input name="firstname" type="text" value="<%= session.me.firstname %>">
+  <%- FlashErr.show(flash, 'firstname') %>
+  <br>
+  
+  <label for="nickname">膩稱</label>
+  <input name="nickname" type="text" value="<%= session.me.nickname %>">
+  <%- FlashErr.show(flash, 'nickname') %>
+  <br>
+  
+  <label for="email">Email</label>
+  <input name="email_read" type="text" value="<%= session.me.email %>" readonly>
+
+  
+  <hr>
+
+  
+  <h2>更改密碼</h2>
+  
+  <label for="password">舊密碼</label>
+  <input name="old_password" type="password" autocomplete="off" autocapitalize="off">
+  <%- FlashErr.show(flash, 'old_password') %>
+  <br>
+  
+  
+  <label for="password">新密碼</label>
+  <input name="new_password" type="password" autocomplete="off" autocapitalize="off">
+  <%- FlashErr.show(flash, 'new_password') %>
+  <br>
+  
+  
+  <label for="password">確認新密碼</label>
+  <input name="confirm_new_password" type="password" autocomplete="off" autocapitalize="off">
+  <%- FlashErr.show(flash, 'confirm_new_password') %>
+  <br>
+  
+
+  <input type="submit" value="修改">
+</form>

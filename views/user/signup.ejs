@@ -1,0 +1,29 @@
+<h1>註冊會員</h1>
+<form action="/signup" method="post" autocomplete="off" class="form">
+
+  <label for="lastname">姓</label>
+  <input name="lastname" type="text" value="<%= (flash && flash.params)? flash.params.lastname : '' %>">
+  <%- FlashErr.show(flash, 'lastname') %>
+  <br/>
+  
+  <label for="firstname">名</label>
+  <input name="firstname" type="text" value="<%= (flash && flash.params)? flash.params.firstname : '' %>">
+  <%- FlashErr.show(flash, 'firstname') %>
+  <br/>
+  
+  <label for="nickname">膩稱</label>
+  <input name="nickname" type="text" value="<%= (flash && flash.params)? flash.params.nickname : '' %>">
+  <%- FlashErr.show(flash, 'nickname') %>
+  <br/>
+  
+  <label for="email">Email</label>
+  <input name="email" type="text" value="<%= (flash && flash.params) ? flash.params.email : '' %>">
+  <%- FlashErr.show(flash, 'email') %>
+  <br/>
+
+  <label for="password">密碼</label>
+  <input name="password" type="password">
+  <%- FlashErr.show(flash, 'password') %>
+
+  <input type="submit" value="完成">
+</form>
