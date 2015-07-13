@@ -6,7 +6,7 @@
  */
 var md5 = require('MD5');
 var validator = require('sails-validation-messages');
-
+var uuid = require('node-uuid');
 
 module.exports = {
   
@@ -114,16 +114,10 @@ module.exports = {
   
   saveProfile: function(req, res) {
     // 執行之前會先check policies (請見config/policy  & policies資料夾)
-    var avatarURL = '';
-    //上傳的部分 還沒弄
-    
-    // 改密碼開始
+
     var params = req.params.all();
     
-    if (avatarURL) {
-      params.avatar = avatarURL;
-    }
-    
+    // 改密碼開始
     if (params.new_password) {
       
       if (params.new_password == params.confirm_new_password && md5(params.old_password) == req.session.me.password) {
@@ -148,25 +142,78 @@ module.exports = {
     }
     // 改密碼結束
     
+    
+    // 改個人資料
     User.update({id: req.session.me.id}, params).exec(function updated (err, user) {
       
       if(err && err.invalidAttributes) { /*!user && */
         err.invalidAttributes = validator(User, err.invalidAttributes);
         
-        req.session.flash = {}
+        req.session.flash = {};
         req.session.flash.params = req.params.all();
         req.session.flash.err = err;
         
       }
       else {
-        console.log('ok');
         req.session.me = user[0];
         req.session.flash = {success: true}
       }
       
       return res.redirect('/profile');
+      
     });
   },
+  
+  saveAvatar: function(req, res) {
+    var avatarURL;
+    
+    //上傳的部分
+    if (req.file('avatar')._files.length) {
+      var apppath = sails.config.appPath + '/assets'
+      var pathname = '/public/avatar/';
+      var filename = uuid() + '.jpg';
+      avatarURL = pathname + filename;
+    }
+    
+    req.file('avatar').upload({
+      dirname: apppath + pathname,
+      saveAs: filename,
+      maxBytes: 10000000 // total 10MB
+    }, function whenDone(err, uploadedFiles) {
+      
+      if (err) {
+        return res.negotiate(err);
+      }
+      // If no files were uploaded, respond with an error.
+      if (uploadedFiles.length === 0){
+        return res.badRequest('No file was uploaded');
+      }
+      console.log(uploadedFiles)
+      
+      
+      User.update({id: req.session.me.id}, {avatar: avatarURL}).exec(function updated (err, user) {
+      
+        if(err && err.invalidAttributes) { /*!user && */
+          err.invalidAttributes = validator(User, err.invalidAttributes);
+          
+          req.session.flash = {}
+          req.session.flash.params = req.params.all();
+          req.session.flash.err = err;
+          
+        }
+        else {
+          req.session.me = user[0];
+          req.session.flash = {success: true}
+        }
+        
+        return res.redirect('/profile');
+        
+      });
+      
+    });
+      
+  },
+  
   
   forget: function(req, res) {
     

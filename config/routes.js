@@ -11,6 +11,7 @@ module.exports.routes = {
   
   'get  /profile': 'UserController.profile',
   'post /profile': 'UserController.saveProfile',
+  'post /profile/avatar': 'UserController.saveAvatar',
   
   '/active':          {view: 'user/active',         locals:{title: '請認證您的帳號'}},
   '/active/success':  {view: 'user/activesuccess',  locals:{title: '您的帳號已認證'}},

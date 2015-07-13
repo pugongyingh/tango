@@ -50,8 +50,9 @@ module.exports.policies = {
 	// }
   
   UserController: {
-      profile: ['isLoggedIn', 'isActived'],
-      saveProfile: ['isLoggedIn', 'isActived']
+      profile:     ['isLoggedIn', 'isActived'],
+      saveProfile: ['isLoggedIn', 'isActived'],
+      saveAvatar:  ['isLoggedIn', 'isActived']
   }
   
   

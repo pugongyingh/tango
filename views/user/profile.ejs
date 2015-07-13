@@ -1,15 +1,23 @@
 <h1>修改資料</h1>
 <%= (flash && flash.success) ? '更新成功' : (flash && flash.err) ? '更新失敗' : '' %>
 
-<h2>基本資料</h2>
-<form enctype="multipart/form-data" action="/profile" method="post" class="form" autocomplete="off">
 
-  <h2>更改頭像</h2>
-  <img src="<%= Avatar.url(session.me) %>?thumb=50x50">
-  <input type="file" name="avatar">
+
+<form enctype="multipart/form-data" action="/profile/avatar" method="post" class="form" autocomplete="off">
+
+  <h2>頭像</h2>
+  <img src="<%= Avatar.url(session.me) %>" style="width: 50px;"><!--?thumb=50x50-->
+  <input type="file" name="avatar" accept="image/jpeg">
   
-  <hr>
+  <input type="submit" value="修改">
+</form>
+
+<hr>
   
+
+<form action="/profile" method="post" class="form" autocomplete="off">
+
+  <h2>基本資料</h2>
   
   <label for="lastname">姓</label>
   <input name="lastname" type="text" value="<%= session.me.lastname %>">
