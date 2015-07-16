@@ -167,19 +167,67 @@ module.exports = {
   saveAvatar: function(req, res) {
     var avatarURL;
     
-    //上傳的部分
-    if (req.file('avatar')._files.length) {
-      var apppath = sails.config.appPath + '/assets'
-      var pathname = '/public/avatar/';
-      var filename = uuid() + '.jpg';
-      avatarURL = pathname + filename;
-    }
+    /*
+    
+    這是可以REDSIZE的  如果S3沒辦法ON THE FLY改圖片大小 就改用這個吧
+    
+    var Upload = require('s3-uploader');
+    var client = new Upload('boggyjan.tango', {
+      aws: {
+        path: 'images/',
+        region: 'us-east-1',
+        acl: 'public-read',
+        accessKeyId: 'AKIAISC5CP2SXZM7SSDQ',
+        secretAccessKey: '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'
+      },
+     
+      cleanup: {
+        versions: true,
+        original: false
+      },
+     
+      original: {
+        awsImageAcl: 'private'
+      },
+     
+      versions: [{
+        maxHeight: 1040,
+        maxWidth: 1040,
+        format: 'jpg',
+        suffix: '-large',
+        quality: 80
+      },{
+        maxHeight: 780,
+        maxWidth: 780,
+        aspect: '4:3',
+        suffix: '-medium'
+      },{
+        maxHeight: 320,
+        maxWidth: 320,
+        aspect: '4:3',
+        suffix: '-small'
+      },{
+        maxHeight: 100,
+        maxWidth: 100,
+        aspect: '1:1',
+        suffix: '-thumb1'
+      },{
+        maxHeight: 250,
+        maxWidth: 250,
+        aspect: '1:1',
+        suffix: '-thumb2'
+      }]
+    });
+    */
+    
+    
     
     req.file('avatar').upload({
-      dirname: apppath + pathname,
-      saveAs: filename,
-      maxBytes: 10000000 // total 10MB
-    }, function whenDone(err, uploadedFiles) {
+      adapter: require('skipper-s3'),
+      key: 'AKIAISC5CP2SXZM7SSDQ',
+      secret: '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',
+      bucket: 'boggyjan.tango'
+      }, function whenDone(err, uploadedFiles) {
       
       if (err) {
         return res.negotiate(err);
@@ -188,12 +236,13 @@ module.exports = {
       if (uploadedFiles.length === 0){
         return res.badRequest('No file was uploaded');
       }
-      console.log(uploadedFiles)
+      //console.log(uploadedFiles[0].extra.Location)
+      avatarURL = uploadedFiles[0].extra.Location
       
       
       User.update({id: req.session.me.id}, {avatar: avatarURL}).exec(function updated (err, user) {
       
-        if(err && err.invalidAttributes) { /*!user && */
+        if(err && err.invalidAttributes) {
           err.invalidAttributes = validator(User, err.invalidAttributes);
           
           req.session.flash = {}
@@ -211,7 +260,7 @@ module.exports = {
       });
       
     });
-      
+    
   },
   
   
@@ -287,6 +336,13 @@ module.exports = {
         });
       }
     });
+  },
+  
+  resendActiveEmail: function(req, res) {
+    if (req.session.me) {
+      Email.resendActiveEmail(req.session.me);
+    }
+    return res.redirect('/active');
   }
   
   

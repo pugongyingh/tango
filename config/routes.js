@@ -17,7 +17,8 @@ module.exports.routes = {
   '/active/success':  {view: 'user/activesuccess',  locals:{title: '您的帳號已認證'}},
   '/active/inactive': {view: 'user/inactive',       locals:{title: '帳號尚未認證'}},
   '/active/error':    {view: 'user/activeerror',    locals:{title: '帳號認證錯誤'}},
-  'get /active/:code': 'UserController.active',
+  'get /active/:code':       'UserController.active',
+  'post /resendActiveEmail': 'UserController.resendActiveEmail',
   
   'get  /forget_password': {view: 'user/forget',         locals:{title: '忘記密碼'}},
   'post /forget_password': 'UserController.forget',
