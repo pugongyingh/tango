@@ -58,7 +58,7 @@ module.exports = {
     },
     vocs: {
       collection: 'voc',
-      via: 'user'
+      via: 'creator'
     },
     avatar: {
       type: 'string'

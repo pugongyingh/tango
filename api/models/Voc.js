@@ -30,6 +30,9 @@ module.exports = {
       required: true
     }
   },
+  
+  
+  
   validationMessages: {
     word: {
       required : '單字是必填欄位'
