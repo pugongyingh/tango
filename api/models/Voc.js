@@ -9,18 +9,24 @@ module.exports = {
   
   
   attributes: {
-    jp: {
+    word: {
       type: 'string',
       required: true
     },
     phonic: {
       type: 'string'
     },
+    
+    // 詞類
+    type: {
+      type: 'string',
+      required: true
+    },
     meaning: {
       type: 'string',
       required: true
     },
-    user:{
+    creator: {
       model: "user",
       required: true
     }
