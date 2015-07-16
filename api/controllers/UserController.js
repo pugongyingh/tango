@@ -165,63 +165,119 @@ module.exports = {
   },
   
   saveAvatar: function(req, res) {
+    
+    
     var avatarURL;
     
-    /*
     
-    這是可以REDSIZE的  如果S3沒辦法ON THE FLY改圖片大小 就改用這個吧
     
-    var Upload = require('s3-uploader');
-    var client = new Upload('boggyjan.tango', {
-      aws: {
-        path: 'images/',
-        region: 'us-east-1',
-        acl: 'public-read',
-        accessKeyId: 'AKIAISC5CP2SXZM7SSDQ',
-        secretAccessKey: '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'
-      },
-     
-      cleanup: {
-        versions: true,
-        original: false
-      },
-     
-      original: {
-        awsImageAcl: 'private'
-      },
-     
-      versions: [{
-        maxHeight: 1040,
-        maxWidth: 1040,
-        format: 'jpg',
-        suffix: '-large',
-        quality: 80
-      },{
-        maxHeight: 780,
-        maxWidth: 780,
-        aspect: '4:3',
-        suffix: '-medium'
-      },{
-        maxHeight: 320,
-        maxWidth: 320,
-        aspect: '4:3',
-        suffix: '-small'
-      },{
-        maxHeight: 100,
-        maxWidth: 100,
-        aspect: '1:1',
-        suffix: '-thumb1'
-      },{
-        maxHeight: 250,
-        maxWidth: 250,
-        aspect: '1:1',
-        suffix: '-thumb2'
-      }]
+    
+    req.file('avatar').upload({}, function(err, uploadedFiles){
+      if (err) {
+        return res.negotiate(err);
+      }
+      // If no files were uploaded, respond with an error.
+      if (uploadedFiles.length === 0){
+        return res.badRequest('No file was uploaded');
+      }
+      //console.log(uploadedFiles[0].extra.Location)
+      tempUrl = uploadedFiles[0].fd;
+      console.log(tempUrl);
+      
+      
+      // 這是可以REDSIZE的  如果S3沒辦法ON THE FLY改圖片大小 就改用這個吧
+      //require('aws-sdk'); 不用require  只要裝 然後加一個檔案 \user\username\.aws\credentials 寫KEY跟SECRET KEY就好
+      var Upload = require('s3-uploader');
+      var client = new Upload('boggyjan.tango', {
+        aws: {
+          path: 'avatar/',
+          region: 'us-east-1',
+          acl: 'public-read'
+        },
+       
+        cleanup: {
+          versions: true,
+          original: false
+        },
+       
+        original: {
+          awsImageAcl: 'private'
+        },
+       
+        versions: [{
+          maxHeight: 2000,
+          maxWidth: 2000,
+          format: 'jpg',
+          quality: 80
+        },{
+          maxHeight: 1000,
+          maxWidth: 1000,
+          format: 'jpg',
+          suffix: '-large',
+          quality: 80
+        },{
+          maxHeight: 780,
+          maxWidth: 780,
+          format: 'jpg',
+          suffix: '-medium'
+        },{
+          maxHeight: 320,
+          maxWidth: 320,
+          format: 'jpg',
+          suffix: '-small'
+        },{
+          maxHeight: 100,
+          maxWidth: 100,
+          format: 'jpg',
+          suffix: '-thumb'
+        }]
+      });
+      
+      client.upload(tempUrl, {}, function(err, images, meta) {
+        
+        if (err) {
+          console.error(err);
+        }
+        else {
+          
+          for (var i = 0; i < images.length; i++) {
+            console.log(images[i]);
+          }
+          
+          
+          avatarURL = images[0].url;
+    
+    
+          User.update({id: req.session.me.id}, {avatar: avatarURL}).exec(function updated (err, user) {
+          
+            if(err && err.invalidAttributes) {
+              err.invalidAttributes = validator(User, err.invalidAttributes);
+              
+              req.session.flash = {}
+              req.session.flash.params = req.params.all();
+              req.session.flash.err = err;
+              
+            }
+            else {
+              req.session.me = user[0];
+              req.session.flash = {success: true}
+            }
+            
+            return res.redirect('/profile');
+            
+          });
+          
+        }
+      });
+      
     });
-    */
+      
     
     
     
+    
+    
+    /*
     req.file('avatar').upload({
       adapter: require('skipper-s3'),
       key: 'AKIAISC5CP2SXZM7SSDQ',
@@ -260,7 +316,7 @@ module.exports = {
       });
       
     });
-    
+    */
   },
   
   
