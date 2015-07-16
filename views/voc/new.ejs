@@ -1,0 +1,26 @@
+<h1>新增單字</h1>
+
+<form action="/voc/new" method="post" autocomplete="off" class="form">
+
+  <label for="word">單字</label>
+  <input name="word" type="text" value="<%= (flash && flash.params)? flash.params.word : '' %>">
+  <%- FlashErr.show(flash, 'word') %>
+  <br/>
+  
+  <label for="phonic">拼音</label>
+  <input name="phonic" type="text" value="<%= (flash && flash.params)? flash.params.phonic : '' %>">
+  <%- FlashErr.show(flash, 'phonic') %>
+  <br/>
+  
+  <label for="type">詞類</label>
+  <input name="type" type="text" value="<%= (flash && flash.params) ? flash.params.type : '' %>">
+  <%- FlashErr.show(flash, 'type') %>
+  <br/>
+  
+  <label for="meaning">解釋</label>
+  <input name="meaning" type="text" value="<%= (flash && flash.params)? flash.params.meaning : '' %>">
+  <%- FlashErr.show(flash, 'meaning') %>
+  <br/>
+  
+  <input type="submit" value="完成">
+</form>
