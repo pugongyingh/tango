@@ -7,7 +7,6 @@
 
 module.exports = {
   
-  
   attributes: {
     word: {
       type: 'string',
@@ -27,9 +26,25 @@ module.exports = {
       required: true
     },
     creator: {
-      model: "user",
+      model: 'user',
       required: true
     }
+  },
+  validationMessages: {
+    word: {
+      required : '單字是必填欄位'
+    },
+    type: {
+      required : '詞性是必填欄位'
+    },
+    meaning: {
+      required : '含意是必填欄位'
+    },
+    creator: {
+      required : '建立者是必填欄位'
+    }
   }
+  
+  
 };
 

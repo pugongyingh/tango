@@ -2,6 +2,10 @@ module.exports.routes = {
 
   '/': {view: 'homepage', locals:{title: '首頁'}},
   
+  
+  
+  // USER
+  
   'get  /login':   'UserController.login',
   'post /login':   'UserController.checkLogin',
   '/logout':       'UserController.logout',
@@ -32,5 +36,19 @@ module.exports.routes = {
   '/reset/error':               {view: 'user/reseterror',    locals:{title: '重設密碼失敗'}},
   
   
-  '/all': 'UserController.all'
+  '/all': 'UserController.all',
+  
+  
+  
+  //VOC
+  
+  
+  '/voc':            'VocController.all',
+  '/voc/:word':      'VocController.show',
+  'get  /voc/new':   'VocController.new',
+  'post /voc/new':   'VocController.create'
+  
+  
+  
+  
 };
