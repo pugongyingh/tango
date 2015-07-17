@@ -26,7 +26,7 @@ module.exports = {
       required: true
     },
     creator: {
-      model: 'user',
+      model: 'User',
       required: true
     }
   },

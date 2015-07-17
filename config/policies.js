@@ -53,6 +53,10 @@ module.exports.policies = {
       profile:     ['isLoggedIn', 'isActived'],
       saveProfile: ['isLoggedIn', 'isActived'],
       saveAvatar:  ['isLoggedIn', 'isActived']
+  },
+  
+  VocController: {
+      'new':       ['isLoggedIn', 'isActived']
   }
   
   

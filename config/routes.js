@@ -22,7 +22,9 @@
 
 module.exports.routes = {
 
-  '/': {view: 'homepage', locals:{title: '首頁'}},
+  //'/': {view: 'homepage', locals:{title: '首頁'}},
+  
+  '/': '/voc',
   
   
   'get  /login':   'UserController.login',
@@ -55,15 +57,14 @@ module.exports.routes = {
   '/reset/error':               {view: 'user/reseterror',    locals:{title: '重設密碼失敗'}},
   
   
-  '/all': 'UserController.all',
-  
-  
+  '/user/all': 'UserController.all',
+  '/user/:id': 'UserController.showUser',
   
   
   '/voc':            'VocController.all',
-  '/voc/:word':      'VocController.show',
   'get  /voc/new':   'VocController.new',
-  'post /voc/new':   'VocController.create'
+  'post /voc/new':   'VocController.create',
+  '/voc/:word':      'VocController.show'
   
   
   

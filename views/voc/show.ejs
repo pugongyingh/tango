@@ -1,1 +1,6 @@
 <h1>單字</h1>
+<p><%= voc.word %></p>
+<p><%= voc.phonic %></p>
+<p><%= voc.type %></p>
+<p><%= voc.meaning %></p>
+<p>這個單字由 <a href="/user/<%= voc.creator.id %>"><%= voc.creator.nickname %></a> 建立</p>

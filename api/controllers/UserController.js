@@ -10,7 +10,7 @@ var uuid = require('node-uuid');
 
 module.exports = {
   
-  // 所有會員
+  // 顯示所有會員
   all: function(req, res) {
     User.find({}).exec(function(err, found) {
       return res.view({
@@ -19,7 +19,16 @@ module.exports = {
       });
     });
   },
-
+  // 顯示單一會員
+  showUser: function(req, res) {
+    User.findOne({id: req.param('id')}).exec(function(err, user) {
+      return res.view({
+        title: user.nickname,
+        user: user
+      });
+    });
+  },
+  
   // 登入
   login: function(req, res) {
     if (!req.session.me) {

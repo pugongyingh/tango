@@ -25,9 +25,10 @@ module.exports = {
     res.view();
   },
   
-  create:function(req, res) {
+  create: function(req, res) {
     
     var params = req.params.all();
+    params.creator = req.session.me;
     
     Voc.create(params)
     .exec(function created (err, user) {
@@ -48,10 +49,14 @@ module.exports = {
 	},
   
   show: function(req, res) {
-    res.locals.title = '單字';
-    res.locals.flash = _.clone(req.session.flash);
-    req.session.flash = {};
-    res.view();
+    
+    Voc.findOne({word: req.param('word')}).populate('creator').exec(function(err, found) {
+      // 上面的 populate('creator') 是為了拿到對應的 User obj 而非僅有 id
+      
+      return res.view({
+        voc: found
+      });
+    });
   }
   
   

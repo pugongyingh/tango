@@ -57,7 +57,7 @@ module.exports = {
       required: true
     },
     vocs: {
-      collection: 'voc',
+      collection: 'Voc',
       via: 'creator'
     },
     avatar: {
