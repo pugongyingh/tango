@@ -62,6 +62,7 @@ module.exports.routes = {
   
   
   '/voc':            'VocController.all',
+  '/voc/me':         'VocController.me',
   'get  /voc/new':   'VocController.new',
   'post /voc/new':   'VocController.create',
   '/voc/:word':      'VocController.show'

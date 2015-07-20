@@ -56,7 +56,8 @@ module.exports.policies = {
   },
   
   VocController: {
-      'new':       ['isLoggedIn', 'isActived']
+      'new':       ['isLoggedIn', 'isActived'],
+      'me':        ['isLoggedIn', 'isActived']
   }
   
   

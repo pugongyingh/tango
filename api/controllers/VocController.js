@@ -10,13 +10,23 @@ var validator = require('sails-validation-messages');
 module.exports = {
   
   all: function(req, res) {
-    Voc.find({}).exec(function(err, found) {
+    Voc.find().exec(function(err, found) {
       return res.view({
         title: '所有單字',
         vocList: found
       });
     });
   },
+  
+  me: function(req, res) {
+    Voc.find({creator: req.session.me.id}).exec(function(err, found) {
+      return res.view({
+        title: '我的單字',
+        vocList: found
+      });
+    });
+  },
+  
   
   'new': function(req, res) {
     res.locals.title = '新增單字';
@@ -43,7 +53,7 @@ module.exports = {
         return res.redirect('/voc/new');
       }
       
-      return res.redirect('/voc');
+      return res.redirect('/voc/me');
     });
     
 	},
@@ -52,10 +62,20 @@ module.exports = {
     
     Voc.findOne({word: req.param('word')}).populate('creator').exec(function(err, found) {
       // 上面的 populate('creator') 是為了拿到對應的 User obj 而非僅有 id
+      if (!found) {
+        req.session.flash = {
+          params: {
+            word: req.param('word')
+          }
+        }
+      }
+      
+      //console.log(found)
       
       return res.view({
         voc: found
       });
+      
     });
   }
   

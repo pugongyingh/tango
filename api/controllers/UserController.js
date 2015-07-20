@@ -21,7 +21,7 @@ module.exports = {
   },
   // 顯示單一會員
   showUser: function(req, res) {
-    User.findOne({id: req.param('id')}).exec(function(err, user) {
+    User.findOne({id: req.param('id')}).populate('vocs').exec(function(err, user) {
       return res.view({
         title: user.nickname,
         user: user

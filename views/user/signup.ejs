@@ -2,22 +2,22 @@
 <form action="/signup" method="post" autocomplete="off" class="form">
 
   <label for="lastname">姓</label>
-  <input name="lastname" type="text" value="<%= (flash && flash.params)? flash.params.lastname : '' %>">
+  <input name="lastname" type="text" value="<%- FlashParam.show(flash, 'lastname') %>">
   <%- FlashErr.show(flash, 'lastname') %>
   <br/>
   
   <label for="firstname">名</label>
-  <input name="firstname" type="text" value="<%= (flash && flash.params)? flash.params.firstname : '' %>">
+  <input name="firstname" type="text" value="<%- FlashParam.show(flash, 'firstname') %>">
   <%- FlashErr.show(flash, 'firstname') %>
   <br/>
   
   <label for="nickname">膩稱</label>
-  <input name="nickname" type="text" value="<%= (flash && flash.params)? flash.params.nickname : '' %>">
+  <input name="nickname" type="text" value="<%- FlashParam.show(flash, 'nickname') %>">
   <%- FlashErr.show(flash, 'nickname') %>
   <br/>
   
   <label for="email">Email</label>
-  <input name="email" type="text" value="<%= (flash && flash.params) ? flash.params.email : '' %>">
+  <input name="email" type="text" value="<%- FlashParam.show(flash, 'email') %>">
   <%- FlashErr.show(flash, 'email') %>
   <br/>
 
