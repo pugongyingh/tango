@@ -174,13 +174,9 @@ module.exports = {
   },
   
   saveAvatar: function(req, res) {
-    
-    
     var avatarURL;
     
-    
-    
-    
+    // 先用skipper上傳到本機 然後用s3-uploader 上傳各種尺寸 (s3會用imagemagick resize)
     req.file('avatar').upload({}, function(err, uploadedFiles){
       if (err) {
         return res.negotiate(err);
@@ -194,8 +190,7 @@ module.exports = {
       console.log(tempUrl);
       
       
-      // 這是可以REDSIZE的  如果S3沒辦法ON THE FLY改圖片大小 就改用這個吧
-      //require('aws-sdk'); 不用require  只要裝 然後加一個檔案 \user\username\.aws\credentials 寫KEY跟SECRET KEY就好
+      //不用 require('aws-sdk'); 只要裝AWS-SDK 然後加一個檔案 \user\username\.aws\credentials 寫KEY跟SECRET KEY就好
       var Upload = require('s3-uploader');
       var client = new Upload('boggyjan.tango', {
         aws: {
@@ -287,6 +282,7 @@ module.exports = {
     
     
     /*
+    // skipper 的s3 adapter 範例  但無法RESIZE
     req.file('avatar').upload({
       adapter: require('skipper-s3'),
       key: 'AKIAISC5CP2SXZM7SSDQ',
