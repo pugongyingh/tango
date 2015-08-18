@@ -61,11 +61,12 @@ module.exports.routes = {
   '/user/:id': 'UserController.showUser',
   
   
-  '/voc':            'VocController.all',
-  '/voc/me':         'VocController.me',
-  'get  /voc/new':   'VocController.new',
-  'post /voc/new':   'VocController.create',
-  '/voc/:word':      'VocController.show'
+  '/voc':             'VocController.all',
+  'get /voc/search/': 'VocController.search',
+  '/voc/me':          'VocController.me',
+  'get  /voc/new':    'VocController.new',
+  'post /voc/new':    'VocController.create',
+  '/voc/:word':       'VocController.show'
   
   
   

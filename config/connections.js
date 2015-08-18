@@ -28,9 +28,9 @@ module.exports.connections = {
   * Installed by default.                                                    *
   *                                                                          *
   ***************************************************************************/
-  localDiskDb: {
-    adapter: 'sails-disk'
-  },
+  //localDiskDb: {
+    //adapter: 'sails-disk'
+  //},
 
   /***************************************************************************
   *                                                                          *
@@ -42,11 +42,21 @@ module.exports.connections = {
   ***************************************************************************/
   someMysqlServer: {
     adapter: 'sails-mysql',
-    host: 'localhost',
-    user: 'root',
-    password: '8253',
-    database: 'sailstesterdb'
-  },
+    /*host: 'localhost',
+    user: 'myuser1',
+    password: 'YpPcB3Vv3QvuErrK',
+    database: 'sailstesterdb',
+    port: 3306*/
+    
+    host: 'boggy.tw',
+    user: 'tangouser1',
+    password: '9wmdjJ67LHd5Zmb2',
+    database: 'tango',
+    port: 3306
+    
+    //charset: 'utf8',
+    //collation : 'utf8_general_ci'
+  }
 
   /***************************************************************************
   *                                                                          *
@@ -56,14 +66,14 @@ module.exports.connections = {
   * Run: npm install sails-mongo                                             *
   *                                                                          *
   ***************************************************************************/
-  someMongodbServer: {
-    adapter: 'sails-mongo',
-    host: 'localhost',
-    port: 27017,
+  //someMongodbServer: {
+    //adapter: 'sails-mongo',
+    //host: 'localhost',
+    //port: 27017,
     // user: 'username',
     // password: 'password',
     // database: 'your_mongo_db_name_here'
-  },
+  //},
 
   /***************************************************************************
   *                                                                          *
@@ -74,13 +84,13 @@ module.exports.connections = {
   *                                                                          *
   *                                                                          *
   ***************************************************************************/
-  somePostgresqlServer: {
-    adapter: 'sails-postgresql',
-    host: 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
-    user: 'YOUR_POSTGRES_USER',
-    password: 'YOUR_POSTGRES_PASSWORD',
-    database: 'YOUR_POSTGRES_DB'
-  }
+  //somePostgresqlServer: {
+    //adapter: 'sails-postgresql',
+    //host: 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
+    //user: 'YOUR_POSTGRES_USER',
+    //password: 'YOUR_POSTGRES_PASSWORD',
+    //database: 'YOUR_POSTGRES_DB'
+  //}
 
 
   /***************************************************************************

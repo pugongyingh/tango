@@ -18,6 +18,19 @@ module.exports = {
     });
   },
   
+  search: function(req, res) {
+    Voc.find({'or': [
+      {word: {'contains': req.param('q')}},
+      {phonic: {'contains': req.param('q')}},
+      {meaning: {'contains': req.param('q')}}
+    ]}).exec(function(err, found) {
+      return res.view({
+        title: '搜尋結果',
+        vocList: found
+      });
+    });
+  },
+  
   me: function(req, res) {
     Voc.find({creator: req.session.me.id}).exec(function(err, found) {
       return res.view({

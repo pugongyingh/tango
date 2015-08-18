@@ -1,5 +1,7 @@
 module.exports = {
   show: function(vocs){
+    vocs = vocs ? vocs : [];
+
     var listHtml = '<ul>';
     
     for (var i = 0; i < vocs.length; i++) {
